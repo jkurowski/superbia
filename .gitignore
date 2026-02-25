@@ -21,3 +21,6 @@ config/tracker.php
 /public/js/editor_old/
 /stubs/
 /app/Console/Commands/
+.env.local
+.env.*
+.continue/
