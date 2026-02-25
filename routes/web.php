@@ -99,6 +99,11 @@ Route::group(['namespace' => 'Front', 'middleware' => 'restrictIp', 'as' => 'fro
         'Static\IndexController@index'
     )->name('finansowanie');
 
+    Route::get(
+        'pakiety-wykonczeniowe',
+        'Static\IndexController@index'
+    )->name('pakiety-wykonczeniowe');
+
 
     // DeveloPro
     Route::group(['namespace' => 'Developro', 'as' => 'developro.'], function () {

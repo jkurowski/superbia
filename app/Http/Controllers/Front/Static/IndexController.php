@@ -29,6 +29,7 @@ class IndexController extends Controller
             'o-inwestycji' => 5,
             'zobacz-domy' => 6,
             'finansowanie' => 7,
+            'pakiety-wykonczeniowe' => 8,
         ];
 
         // Dla podanych slugów używamy zmapowanego ID, w innym przypadku domyślnie 1 (jak dotychczas)
