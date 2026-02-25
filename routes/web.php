@@ -94,6 +94,11 @@ Route::group(['namespace' => 'Front', 'middleware' => 'restrictIp', 'as' => 'fro
         'Static\IndexController@index'
     )->name('polityka-prywatnosci');
 
+    Route::get(
+        'finansowanie',
+        'Static\IndexController@index'
+    )->name('finansowanie');
+
 
     // DeveloPro
     Route::group(['namespace' => 'Developro', 'as' => 'developro.'], function () {
