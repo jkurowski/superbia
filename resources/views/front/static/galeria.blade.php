@@ -16,117 +16,48 @@
                 </nav>
             </div>
         </section>
-        <section class="section-spacing">
-            <div class="container">
-                <h1 class="h2 text-primary text-center mb-4 " data-aos="fade-up">
-                    Wizualizacje zewnętrzne
-                </h1>
-                <div class="row justify-content-center gy-4">
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/17_Post.webp') }}" class="glightbox" data-gallery="gallery-1">
-                            <img width="800" height="800" src="{{ asset('images/17_Post.webp') }}" alt="Salon" class="img-fluid" loading="eager"
-                                 data-aos="fade">
-                        </a>
+        @if(isset($galleries) && $galleries->count())
+            @foreach($galleries as $gallery)
+                <section class="section-spacing">
+                    <div class="container">
+                        <h2 class="text-primary text-center mb-4" data-aos="fade-up">
+                            {{ $gallery->name }}
+                        </h2>
+                        @php
+                            $galleryUid = 'gallery-'.$gallery->id;
+                        @endphp
+                        <div class="row justify-content-center gy-4">
+                            @forelse($gallery->photos as $photo)
+                                @php
+                                    $bigWebp = asset('uploads/gallery/images/webp/' . $photo->file_webp);
+                                    $bigJpg  = asset('uploads/gallery/images/' . $photo->file);
+                                    $thumbWebp = asset('uploads/gallery/images/thumbs/webp/' . $photo->file_webp);
+                                    $thumbJpg  = asset('uploads/gallery/images/thumbs/' . $photo->file);
+                                    $alt = $photo->file_alt ?: $photo->name;
+                                @endphp
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <a href="{{ $bigWebp }}" class="glightbox" data-gallery="{{ $galleryUid }}" aria-label="{{ $alt }}">
+                                        <picture>
+                                            <source type="image/webp" srcset="{{ $thumbWebp }}">
+                                            <img width="800" height="800" src="{{ $thumbJpg }}" alt="{{ $alt }}" class="img-fluid" loading="lazy" decoding="async" data-aos="fade">
+                                        </picture>
+                                    </a>
+                                </div>
+                            @empty
+                                <div class="col-12 text-center text-muted">Brak zdjęć w tej galerii.</div>
+                            @endforelse
+                        </div>
                     </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/10_Post.webp') }}" class="glightbox" data-gallery="gallery-1">
-                            <img width="800" height="800" src="{{ asset('images/10_Post.webp') }}" alt="Salon" class="img-fluid" loading="eager"
-                                 data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/taras_01.webp') }}" class="glightbox" data-gallery="gallery-1">
-                            <img width="800" height="800" src="{{ asset('images/taras_01.webp') }}" alt="Salon" class="img-fluid" loading="eager"
-                                 data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/taras_02.webp') }}" class="glightbox" data-gallery="gallery-1">
-                            <img width="800" height="800" src="{{ asset('images/taras_02.webp') }}" alt="Salon" class="img-fluid" loading="eager"
-                                 data-aos="fade">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-spacing">
-            <div class="container">
-                <h2 class="text-primary text-center mb-4" data-aos="fade-up">
-                    Wizualizacje wnętrz
-                </h2>
-                <div class="row justify-content-center gy-4">
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_01.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_01.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_02.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_02.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_03.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_03.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_04.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_04.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_05.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_05.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/salon_06.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/salon_06.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/sypialnia_01.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/sypialnia_01.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/sypialnia_02.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/sypialnia_02.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/gabinet_01.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/gabinet_01.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <a href="{{ asset('images/gabinet_02.webp') }}" class="glightbox" data-gallery="gallery-2">
-                            <img width="800" height="800" src="{{ asset('images/gabinet_02.webp') }}" alt="Salon" class="img-fluid" loading="lazy"
-                                 decoding="async" data-aos="fade">
-                        </a>
+                </section>
+            @endforeach
+        @else
+            <section class="section-spacing">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center text-muted">Aktualnie brak galerii do wyświetlenia.</div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="section-spacing">
-            <div class="container">
-                <h2 class="text-primary text-center mb-4" data-aos="fade-up">
-                    Dziennik inwestycji
-                </h2>
-                <div class="row justify-content-center gy-4">
-
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </main>
 @endsection

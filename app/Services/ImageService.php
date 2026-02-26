@@ -12,19 +12,35 @@ class ImageService
     public function upload(UploadedFile $file, object $model, bool $delete = false)
     {
 
-        if ($delete) {
-            if (File::isFile(public_path('uploads/gallery/images/' . $model->file))) {
-                File::delete(public_path('uploads/gallery/images/' . $model->file));
+        $path = 'uploads/gallery/images/';
+
+        $folders = [
+            $path,
+            $path . 'webp/',
+            $path . 'thumbs/',
+            $path . 'thumbs/webp/'
+        ];
+
+        foreach ($folders as $folder) {
+            $fullPath = public_path($folder);
+            if (!file_exists($fullPath)) {
+                mkdir($fullPath, 0777, true);
             }
-            if (File::isFile(public_path('uploads/gallery/images/webp/' . $model->file_webp))) {
-                File::delete(public_path('uploads/gallery/images/webp/' . $model->file_webp));
+        }
+
+        if ($delete) {
+            if (File::isFile(public_path($path . $model->file))) {
+                File::delete(public_path($path . $model->file));
+            }
+            if (File::isFile(public_path($path.'webp/' . $model->file_webp))) {
+                File::delete(public_path($path.'webp/' . $model->file_webp));
             }
 
-            if (File::isFile(public_path('uploads/gallery/images/thumbs/' . $model->file))) {
-                File::delete(public_path('uploads/gallery/images/thumbs/' . $model->file));
+            if (File::isFile(public_path($path.'thumbs/' . $model->file))) {
+                File::delete(public_path($path.'thumbs/' . $model->file));
             }
-            if (File::isFile(public_path('uploads/gallery/images/thumbs/webp/' . $model->file_webp))) {
-                File::delete(public_path('uploads/gallery/images/thumbs/webp/' . $model->file_webp));
+            if (File::isFile(public_path($path.'thumbs/webp/' . $model->file_webp))) {
+                File::delete(public_path($path.'thumbs/webp/' . $model->file_webp));
             }
         }
         $name_file = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -32,13 +48,13 @@ class ImageService
         $name = date('His') . '_' . Str::slug($name_file) . '.' . $file->getClientOriginalExtension();
         $name_webp = date('His') . '_' . Str::slug($name_file) . '.webp';
 
-        $file->storeAs('gallery/images/', $name, 'public_uploads');
+        $file->move(public_path($path), $name);
 
-        $filepath = public_path('uploads/gallery/images/' . $name);
-        $filepath_webp = public_path('uploads/gallery/images/webp/' . $name_webp);
+        $filepath = public_path($path . $name);
+        $filepath_webp = public_path($path.'webp/' . $name_webp);
 
-        $thumb_filepath = public_path('uploads/gallery/images/thumbs/' . $name);
-        $thumb_filepath_webp = public_path('uploads/gallery/images/thumbs/webp/' . $name_webp);
+        $thumb_filepath = public_path($path.'thumbs/' . $name);
+        $thumb_filepath_webp = public_path($path.'thumbs/webp/' . $name_webp);
 
         ImageManager::make($filepath)
             ->resize(

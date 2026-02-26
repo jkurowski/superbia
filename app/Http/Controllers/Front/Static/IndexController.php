@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 // CMS
 use App\Models\Page;
+use App\Models\Gallery;
 
 class IndexController extends Controller
 {
@@ -35,6 +36,19 @@ class IndexController extends Controller
         // Dla podanych slugów używamy zmapowanego ID, w innym przypadku domyślnie 1 (jak dotychczas)
         $pageId = $pageIdMap[$slug] ?? 1;
         $page = Page::find($pageId);
+
+        // Jeśli slug to 'galeria' – pobierz wszystkie galerie ze statusem 1 wraz ze zdjęciami (relacja 'photos')
+        if ($slug === 'galeria') {
+            $galleries = Gallery::with('photos')
+                ->where('status', 1)
+                ->orderBy('sort')
+                ->get();
+
+            return view($view, [
+                'page' => $page,
+                'galleries' => $galleries,
+            ]);
+        }
 
         return view($view, compact('page'));
     }
