@@ -21,33 +21,8 @@
                 <div class="card mt-3">
                     @include('form-elements.back-route-button')
                     <div class="card-body control-col12">
-                        @if(!Request::get('lang'))
-                        <div class="row w-100 form-group">
-                            @include('form-elements.html-select', ['label' => 'Status', 'name' => 'active', 'selected' => $entry->active, 'select' => ['1' => 'Pokaż na liście', '0' => 'Ukryj na liście']])
-                        </div>
-                        <div class="row w-100 form-group">
-                            @include('form-elements.html-select', ['label' => 'Okno docelowe', 'name' => 'url_target', 'selected' => $entry->url_target, 'select' => ['_self' => 'Ta samo okno', '_blank' => 'Nowe okno', '_domain' => 'Link w domenie']])
-                        </div>
-                        <div class="row w-100 form-group">
-                            @include('form-elements.html-input-text', ['label' => 'Adres url', 'sublabel'=> 'Zew. linki, moduł strony', 'name' => 'url', 'value' => $entry->url])
-                        </div>
-
-                        @if($selectMenu->count() > 0)
-                        <div class="row w-100 form-group">
-                            @include('form-elements.html-select', [
-                                'label' => 'Podstrona',
-                                'name' => 'parent_id',
-                                'selected' => $entry->parent_id,
-                                'select' => $selectMenu
-                            ])
-                        </div>
-                        @endif
-                        @endif
                         <div class="row w-100 form-group">
                             @include('form-elements.html-input-text', ['label' => 'Tytuł strony', 'name' => 'title', 'value' => $entry->title, 'required' => 1, 'readonly' => $entry->locked])
-                        </div>
-                        <div class="row w-100 form-group">
-                            @include('form-elements.html-input-text', ['label' => 'Nagłówek H1', 'name' => 'content_header', 'value' => $entry->content_header])
                         </div>
                         <div class="row w-100 form-group">
                             @include('form-elements.html-input-text', ['label' => 'Nagłówek strony', 'sublabel'=> 'Meta tag - title', 'name' => 'meta_title', 'value' => $entry->meta_title])
@@ -58,17 +33,6 @@
                         <div class="row w-100 form-group">
                             @include('form-elements.html-input-text', ['label' => 'Indeksowanie', 'sublabel'=> 'Meta tag - robots', 'name' => 'meta_robots', 'value' => $entry->meta_robots])
                         </div>
-                            @if(!Request::get('lang'))
-                        <div class="row w-100 mb-4">
-                            @include('form-elements.html-input-file', [
-                                'label' => 'Nagłówek',
-                                'sublabel' => '(wymiary: '.config('images.investment.header_width').'px / '.config('images.investment.header_height').'px)',
-                                'name' => 'header',
-                                'file' => $entry->file_header,
-                                'file_preview' => 'uploads/header/'
-                                ])
-                        </div>
-                            @endif
                     </div>
                 </div>
             </div>
